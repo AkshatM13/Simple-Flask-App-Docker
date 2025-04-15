@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-deployment
+spec:
+  replicas: 2  # Number of replicas
+  selector:
+    matchLabels:
+      app: flask
+  template:
+    metadata:
+      labels:
+        app: flask
+    spec:
+      containers:
+      - name: flask-container
+        image: $DOCKER_USERNAME/akshat_flask_23:latest  # Use your Docker image
+        ports:
+        - containerPort: 5001
+        env:
+        - name: FLASK_APP
+          value: "product_list_app.py"
+        - name: FLASK_ENV
+          value: "development"
+---
